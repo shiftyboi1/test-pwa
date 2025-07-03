@@ -1,0 +1,1 @@
+{"name":"Testing PWA App","short_name":"PWAapp","description":"Love, bread and roses for all!","start_url":"/test-pwa/","display":"standalone","background_color":"#ffffff","theme_color":"#ffffff","lang":"en","scope":"/test-pwa/","icons":[{"src":"vite.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}]}
