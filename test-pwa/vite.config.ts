@@ -24,7 +24,6 @@ export default defineConfig({
         display: "standalone",
         start_url: "/test-pwa/",
         scope: "/test-pwa/",
-        start_url: "/",
         // Icons - toto je potrebné pre PWA
         icons: [
           {
