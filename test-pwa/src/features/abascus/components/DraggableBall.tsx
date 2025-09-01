@@ -11,6 +11,8 @@ function DraggableBall({
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
 
+  // TODO: Pointer events instead of Mouse events, allowing for multitouch
+
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
     setDragOffset(e.clientX - position); // Offset of mouse to ball center
