@@ -26,6 +26,7 @@ function App() {
   //   };
   // }, [randomiseCount]);
 
+  // TODO: Make stick length be based on the CSS and not set in code.
   return (
     <>
       <h1>Skušobná PWA app</h1>
