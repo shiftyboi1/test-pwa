@@ -8,6 +8,5 @@ export interface AbacusBallProps {
 
 export interface AbacusProps {
   numberOfBalls?: number;
-  stickLength?: number;
   ballSize?: number;
 }

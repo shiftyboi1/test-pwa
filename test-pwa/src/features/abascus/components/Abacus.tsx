@@ -1,18 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import DraggableBall from "../components/DraggableBall";
 import type { AbacusProps } from "../types";
 
-function Abacus({
-  numberOfBalls = 5,
-  stickLength = 600,
-  ballSize = 50,
-}: AbacusProps) {
-  const [ballPositions, setBallPositions] = useState<number[]>(
-    Array.from(
-      { length: numberOfBalls },
-      (_, i) => (i + 1) * (stickLength / (numberOfBalls + 1))
-    )
-  );
+function Abacus({ numberOfBalls = 5, ballSize = 50 }: AbacusProps) {
+  const stickRef = useRef<HTMLDivElement>(null);
+  const [stickWidth, setStickWidth] = useState<number>(0);
+  const [ballPositions, setBallPositions] = useState<number[]>([]);
+
+  // TODO: When resizing, store ball positions and move them to approprate location
+
+  // Handle stick width changes
+  useEffect(() => {
+    const updateWidth = () => {
+      if (stickRef.current) {
+        setStickWidth(stickRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth(); // Initial width
+
+    let observer: ResizeObserver | null = null;
+    const stickElem = stickRef.current;
+    if (stickElem) {
+      observer = new window.ResizeObserver(updateWidth);
+      observer.observe(stickElem);
+    }
+
+    window.addEventListener("resize", updateWidth);
+
+    return () => {
+      if (observer && stickElem) observer.unobserve(stickElem);
+      window.removeEventListener("resize", updateWidth);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (stickWidth > 0) {
+      setBallPositions(
+        Array.from(
+          { length: numberOfBalls },
+          (_, i) => (i + 1) * (stickWidth / (numberOfBalls + 1))
+        )
+      );
+      console.log(`Stick width from ref: ${stickWidth}`);
+    }
+  }, [stickWidth, numberOfBalls]);
 
   const updateBallPosition = (ballIndex: number, newPosition: number) => {
     const constrainedPosition = constrainPosition(ballIndex, newPosition);
@@ -32,7 +64,7 @@ function Abacus({
     // Stick boundaries
     constrained = Math.max(
       ballRadius,
-      Math.min(stickLength - ballRadius, constrained)
+      Math.min(stickWidth - ballRadius, constrained)
     );
 
     // Collision
@@ -53,8 +85,8 @@ function Abacus({
     <div style={{ position: "relative", padding: "50px" }}>
       {/* Stick */}
       <div
+        ref={stickRef}
         style={{
-          width: stickLength,
           height: 8,
           backgroundColor: "#7a7a7aff",
           borderRadius: 4,
@@ -92,7 +124,7 @@ function Abacus({
             key={index}
             position={position}
             ballSize={ballSize}
-            stickLength={stickLength}
+            stickLength={stickWidth}
             onPositionChange={(newPos: number) =>
               updateBallPosition(index, newPos)
             }
@@ -104,8 +136,8 @@ function Abacus({
       {/* Info */}
       <div style={{ marginTop: "20px", fontSize: "12px", color: "#666" }}>
         <p>
-          Balls: {numberOfBalls} | Stick: {stickLength}px | Ball size:{" "}
-          {ballSize}px
+          Balls: {numberOfBalls} | Stick: {stickWidth}px | Ball size: {ballSize}
+          px
         </p>
         <p>
           Positions: {ballPositions.map((pos) => Math.round(pos)).join(", ")}

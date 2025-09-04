@@ -30,8 +30,9 @@ function App() {
   return (
     <>
       <h1>Skušobná PWA app</h1>
-      <Abacus numberOfBalls={4} stickLength={600} ballSize={40} />
-      <Abacus numberOfBalls={4} stickLength={600} ballSize={40} />
+      <div style={{ width: "60vw" }}>
+        <Abacus numberOfBalls={4} ballSize={40} />
+      </div>
     </>
   );
 }
