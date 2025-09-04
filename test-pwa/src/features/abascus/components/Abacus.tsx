@@ -28,11 +28,12 @@ function Abacus({ numberOfBalls = 5, ballSize = 50 }: AbacusProps) {
 
     window.addEventListener("resize", updateWidth);
 
+    // Note: Cleanup function
     return () => {
       if (observer && stickElem) observer.unobserve(stickElem);
       window.removeEventListener("resize", updateWidth);
     };
-  }, []);
+  }, []); // Note: Empty dependency array means this runs once on mount and cleanup on unmount
 
   useEffect(() => {
     if (stickWidth > 0) {
@@ -44,7 +45,7 @@ function Abacus({ numberOfBalls = 5, ballSize = 50 }: AbacusProps) {
       );
       console.log(`Stick width from ref: ${stickWidth}`);
     }
-  }, [stickWidth, numberOfBalls]);
+  }, [stickWidth, numberOfBalls]); // Note: Runs when stickWidth or numberOfBalls changes
 
   const updateBallPosition = (ballIndex: number, newPosition: number) => {
     const constrainedPosition = constrainPosition(ballIndex, newPosition);

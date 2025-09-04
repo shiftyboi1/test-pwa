@@ -12,15 +12,13 @@ function DraggableBall({
   const [dragOffset, setDragOffset] = useState(0);
   const [activePointerId, setActivePointerId] = useState<number | null>(null);
 
-  // TODO: Pointer events instead of Mouse events, allowing for multitouch
-
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    // Only start drag for primary button (touch, pen, left mouse)
+    // Note: Only start drag for primary button (touch, pen, left mouse)
     if (e.button !== 0) return;
     setIsDragging(true);
     setDragOffset(e.clientX - position);
     setActivePointerId(e.pointerId);
-    // Capture pointer so we continue to receive events even if pointer leaves the element
+    // Note: Capture pointer so we continue to receive events even if pointer leaves the element
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
   };
 
@@ -61,6 +59,7 @@ function DraggableBall({
     activePointerId,
   ]);
 
+  // Stuff here would be calculated based on height eventually
   return (
     <div
       style={{
