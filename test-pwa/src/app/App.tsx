@@ -1,5 +1,6 @@
 import "../App.css";
 import Abacus from "../features/abascus/components/Abacus";
+import Mp3Player from "../features/Mp3Player/components/mp3player";
 
 function App() {
   // console.log("App rendered");
@@ -32,6 +33,7 @@ function App() {
       <h1>Skušobná PWA app</h1>
       <div style={{ width: "60vw" }}>
         <Abacus numberOfBalls={4} ballSize={40} />
+        <Mp3Player src="https://web.archive.org/web/20041019082238if_/http://www.navyband.navy.mil/anthems/ANTHEMS/Slovack%20Republic.mp3" />
       </div>
     </>
   );
